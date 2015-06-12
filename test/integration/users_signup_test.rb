@@ -32,6 +32,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
       post_via_redirect users_path, params
     end
     assert_template "users/show"
+    assert is_logged_in?
     assert_select "div.alert.alert-success", /welcome/i
     assert_select "div.alert-danger", false
   end
