@@ -14,6 +14,9 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
       post users_path, params
     end
     assert_template "users/new"
+    assert_select "div#error_explanation"
+    assert_select "div.alert.alert-danger"
+    assert_select "div.field_with_errors"
   end
 
   test "valid signup information" do
@@ -29,5 +32,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
       post_via_redirect users_path, params
     end
     assert_template "users/show"
+    assert_select "div.alert.alert-success", /welcome/i
+    assert_select "div.alert-danger", false
   end
 end
