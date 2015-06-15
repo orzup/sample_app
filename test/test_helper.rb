@@ -20,12 +20,12 @@ class ActiveSupport::TestCase
     password    = opts[:password]    || "password"
     remember_me = opts[:remember_me] || "1"
     if integration_test?
-      session = {
+      session_params = {
         email:       user.email,
         password:    password,
         remember_me: remember_me
       }
-      post login_path, session: session
+      post login_path, session: session_params
     else
       session[:user_id] = user.id
     end
