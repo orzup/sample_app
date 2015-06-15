@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
     update_attribute(:remember_digest, nil)
   end
 
-  def self.digest(string)
+  def User.digest(string)
     cost = if ActiveModel::SecurePassword.min_cost
              BCrypt::Engine::MIN_COST
            else
@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
     BCrypt::Password.create(string, cost: cost)
   end
 
-  def self.new_token
+  def User.new_token
     SecureRandom.urlsafe_base64
   end
 end
