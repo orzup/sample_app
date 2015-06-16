@@ -50,7 +50,7 @@ class UsersControllerTest < ActionController::TestCase
     user_params = {
       password:              pass,
       password_confirmation: pass,
-      admin: true
+      admin: "1"
     }
     patch :update, id: @other, user: user_params
     assert_not @other.reload.admin?
