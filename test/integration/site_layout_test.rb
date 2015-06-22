@@ -20,8 +20,8 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
     assert_select "div.stats"
     assert_select "a[href=?]", following_user_path(@user)
     assert_select "a[href=?]", followers_user_path(@user)
-    assert_match @user.following.count.to_s, response.body
-    assert_match @user.followers.count.to_s, response.body
+    assert_select "#following", text: @user.following.count.to_s
+    assert_select "#followers", text: @user.followers.count.to_s
   end
 
   test "signup page's title" do
