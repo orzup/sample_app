@@ -33,6 +33,19 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
     assert_select "a[href=?]", logout_path
   end
 
+  test "layout links (logged-in)" do
+    @user = users(:michael)
+    log_in_as @user
+    get root_path
+
+    assert_template "static_pages/home"
+    assert_select "div.stats"
+    assert_select "a[href=?]", following_user_path(@user)
+    assert_select "a[href=?]", followers_user_path(@user)
+    assert_select "#following", text: @user.following.count.to_s
+    assert_select "#followers", text: @user.followers.count.to_s
+  end
+
   test "signup page's title" do
     get signup_path
     assert_select "title", full_title("Sign up")
