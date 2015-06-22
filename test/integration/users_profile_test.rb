@@ -31,6 +31,6 @@ class UsersProfileTest < ActionDispatch::IntegrationTest
     assert_select "a[href=?]", favored_user_path(@user)
     assert_select "#following", text: @user.following.count.to_s
     assert_select "#followers", text: @user.followers.count.to_s
-    assert_select "#favorites_number", text: @user.favorite_posts.count.to_s
+    assert_select "#favorites_count", text: @user.favorite_posts.count.to_s
   end
 end
