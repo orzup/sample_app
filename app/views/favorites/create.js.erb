@@ -1,0 +1,3 @@
+$("#micropost-<%= @micropost.id %> .fav_unfav_form").html(
+    "<%= escape_javascript(render "shared/unfavor", micropost: @micropost) %>"
+)

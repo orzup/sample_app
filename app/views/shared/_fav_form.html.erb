@@ -1,0 +1,9 @@
+<% if logged_in? %>
+  <div class="fav_unfav_form">
+    <% if current_user.favorite?(micropost) %>
+      <%= render "shared/unfavor", micropost: micropost %>
+    <% else %>
+      <%= render "shared/favor",   micropost: micropost %>
+    <% end %>
+  </div>
+<% end %>
