@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
     dependent:   :destroy
   has_many :following, through: :active_relationships,  source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
+  has_many :favorites, dependent: :destroy
+  has_many :favorite_posts, through: :favorites, source: :micropost
 
   before_save   :downcase_email
   before_create :create_activation_digest
@@ -95,6 +97,18 @@ class User < ActiveRecord::Base
 
   def following?(other)
     following.include? other
+  end
+
+  def favor(micropost)
+    favorites.create(micropost_id: micropost.id)
+  end
+
+  def unfavor(micropost)
+    favorites.find_by(micropost_id: micropost.id).destroy
+  end
+
+  def favorite?(micropost)
+    favorite_posts.include? micropost
   end
 
   private
