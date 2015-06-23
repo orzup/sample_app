@@ -100,11 +100,11 @@ class User < ActiveRecord::Base
   end
 
   def favor(micropost)
-    favorites.create(micropost_id: micropost.id)
+    favorites.create(micropost_id: micropost.id) unless favorite?(micropost)
   end
 
   def unfavor(micropost)
-    favorites.find_by(micropost_id: micropost.id).destroy
+    favorites.find_by(micropost_id: micropost.id).destroy if favorite?(micropost)
   end
 
   def favorite?(micropost)

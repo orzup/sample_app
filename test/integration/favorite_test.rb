@@ -23,7 +23,7 @@ class FavoriteIntegrationTest < ActionDispatch::IntegrationTest
     @user.favor(@micropost)
     favorite = @user.favorites.find_by(micropost_id: @micropost.id)
     assert_difference "@user.favorite_posts.count", -1 do
-      delete favorite_path(favorite)
+      delete favorite_path(favorite), micropost_id: @micropost.id
     end
   end
 
@@ -31,7 +31,7 @@ class FavoriteIntegrationTest < ActionDispatch::IntegrationTest
     @user.favor(@micropost)
     favorite = @user.favorites.find_by(micropost_id: @micropost.id)
     assert_difference "@user.favorite_posts.count", -1 do
-      xhr :delete, favorite_path(favorite)
+      xhr :delete, favorite_path(favorite), micropost_id: @micropost.id
     end
   end
 end
