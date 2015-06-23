@@ -12,7 +12,7 @@ class FavoritesController < ApplicationController
   end
 
   def destroy
-    fav = Favorite.find_by_id(params[:id])
+    fav = Favorite.find_by(id: params[:id])
     @micropost = Micropost.find(params[:micropost_id])
 
     current_user.unfavor(@micropost)
