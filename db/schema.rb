@@ -11,7 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150618075734) do
+ActiveRecord::Schema.define(version: 20150623074354) do
+
+  create_table "direct_messages", force: :cascade do |t|
+    t.text     "content"
+    t.integer  "from_user_id"
+    t.integer  "to_user_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "direct_messages", ["from_user_id", "to_user_id", "created_at"], name: "triple_index"
+
+  create_table "favorites", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "micropost_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "favorites", ["micropost_id"], name: "index_favorites_on_micropost_id"
+  add_index "favorites", ["user_id", "micropost_id"], name: "index_favorites_on_user_id_and_micropost_id", unique: true
+  add_index "favorites", ["user_id"], name: "index_favorites_on_user_id"
 
   create_table "microposts", force: :cascade do |t|
     t.text     "content"
