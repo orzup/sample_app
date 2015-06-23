@@ -17,8 +17,8 @@
     <% if @microposts.any? %>
       <h3>Microposts (<%= @microposts.count %>)</h3>
       <ol class="microposts">
-        <% @microposts.each do |post| %>
-          <%= render post, micropost: post %>
+        <% @microposts.each do |micropost| %>
+          <%= render micropost, micropost: micropost %>
         <% end %>
       </ol>
       <%= will_paginate @microposts %>
