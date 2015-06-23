@@ -2,4 +2,7 @@ $("#micropost-<%= @micropost.id %> .fav_unfav_form").html(
     "<%= escape_javascript(render "shared/favor", micropost: @micropost) %>"
 );
 $("#micropost-<%= @micropost.id %> .fav_count").html("<%= @micropost.favored_users.count %>");
-$("#favorites_count").html("<%= @user.favorite_posts.count %>")
+
+<% if @micropost.user == current_user %>
+  $("#favorites_count").html("<%= current_user.favorite_posts.count %>");
+<% end %>
