@@ -7,3 +7,8 @@ two:
   content: Goodbye
   from_user: lana
   to_user: michael
+
+three:
+  content: How are you?
+  from_user: michael
+  to_user: mallory
