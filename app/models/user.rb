@@ -98,6 +98,10 @@ class User < ActiveRecord::Base
     following.include? other
   end
 
+  def following_each_other?(other)
+    self.following?(other) && other.following?(self)
+  end
+
   private
 
   def downcase_email
