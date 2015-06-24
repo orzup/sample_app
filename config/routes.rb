@@ -17,6 +17,10 @@ Rails.application.routes.draw do
     end
   end
 
+  get  'direct_messages'             => 'direct_messages#index'
+  get  'direct_messages/:to_user_id' => 'direct_messages#talk', as: :direct_messages_talk
+  post 'direct_messages/:to_user_id' => 'direct_messages#create'
+
   resources :account_activations, only: [:edit]
 
   resources :password_resets, only: [:new, :create, :edit, :update]
