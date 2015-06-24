@@ -1,0 +1,9 @@
+<li>
+  <%= gravatar_for message.from_user, size: 50 %>
+  <div class="talk">
+    <%= message.content %>
+  </div>
+  <span class="timestamp">
+    Sent <%= time_ago_in_words(message.created_at) %> ago.
+  </span>
+</li>

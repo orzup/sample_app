@@ -1,0 +1,5 @@
+<li>
+  <%= gravatar_for user, size: 50 %>
+  <%= link_to "Send DM to #{user.name}", direct_messages_talk_path(user),
+              class: "btn btn-primary" %>
+</li>

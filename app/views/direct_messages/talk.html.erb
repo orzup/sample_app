@@ -1,1 +1,16 @@
-<h1>DirectMessages#talk</h1>
+<h1>Talk with <%= @user.name %></h1>
+
+<%= form_for(@new_message, url: direct_messages_talk_path(@user)) do |f| %>
+  <%= f.text_area :content, class: "form-control" %>
+  <%= f.submit "Send", class: "btn btn-primary"%>
+<% end %>
+
+<ul>
+  <div class="users">
+    <% @messages.each do |message| %>
+      <%= render "direct_messages/message", message: message %>
+    <% end %>
+  </div>
+</ul>
+
+<%= will_paginate @messages %>
