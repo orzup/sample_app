@@ -33,3 +33,15 @@ following = users[2..50]
 followers = users[3..40]
 following.each {|followed| user.follow followed }
 followers.each {|follower| follower.follow user }
+
+users = User.all
+user  = users.first
+users[2..10].each do |other|
+  if other.following?(user) && user.following?(other)
+    other.direct_messages.create!(content: Faker::Lorem.sentence(5), to_user_id: user.id)
+    user.direct_messages.create!( content: Faker::Lorem.sentence(5), to_user_id: other.id)
+    other.direct_messages.create!(content: Faker::Lorem.sentence(5), to_user_id: user.id)
+    user.direct_messages.create!( content: Faker::Lorem.sentence(5), to_user_id: other.id)
+    other.direct_messages.create!(content: Faker::Lorem.sentence(5), to_user_id: user.id)
+  end
+end
