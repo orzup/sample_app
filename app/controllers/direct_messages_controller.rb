@@ -1,9 +1,12 @@
 class DirectMessagesController < ApplicationController
   before_action :logged_in_user
-  before_action :following_each_other, only: [:talk, :create]
+  before_action :talked_once_or_mutual_friend, only: [:talk]
+  before_action :mutual_friends, only: [:create]
 
   def index
-    @target_users = (current_user.following & current_user.followers).paginate(page: params[:page])
+    mutual_friends = (current_user.following & current_user.followers)
+    @target_users = (mutual_friends | users_talked_once)
+    @target_users = @target_users.sort_by(&:id).paginate(page: params[:page])
   end
 
   def talk
@@ -26,10 +29,29 @@ class DirectMessagesController < ApplicationController
 
   private
 
-  def following_each_other
+  def talked_once_or_mutual_friend
+    @user = User.find(params[:to_user_id])
+
+    mutual_friends = (current_user.following & current_user.followers)
+    talked_users   = users_talked_once
+
+    redirect_to direct_massage_path unless (mutual_friends | talked_users).include? @user
+  end
+
+  def mutual_friends
     @user = User.find(params[:to_user_id])
 
     redirect_to direct_messages_path unless current_user.following_each_other?(@user)
+  end
+
+  def users_talked_once
+    talked_user_ids = DirectMessage.where(from_user_id: current_user.id)
+                                   .select(:to_user_id)
+                                   .uniq.map(&:to_user_id) |
+                      DirectMessage.where(to_user_id: current_user.id)
+                                   .select(:from_user_id)
+                                   .uniq.map(&:from_user_id)
+    talked_users = User.where(id: talked_user_ids)
   end
 
   def dm_params
