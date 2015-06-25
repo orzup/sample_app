@@ -102,6 +102,16 @@ class User < ActiveRecord::Base
     self.following?(other) && other.following?(self)
   end
 
+  def users_talked_once
+    talked_user_ids = DirectMessage.where(from_user_id: self.id)
+                                   .select(:to_user_id)
+                                   .uniq.map(&:to_user_id) |
+                      DirectMessage.where(to_user_id: self.id)
+                                   .select(:from_user_id)
+                                   .uniq.map(&:from_user_id)
+    User.where(id: talked_user_ids)
+  end
+
   private
 
   def downcase_email

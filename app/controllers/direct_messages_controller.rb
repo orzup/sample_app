@@ -5,7 +5,7 @@ class DirectMessagesController < ApplicationController
 
   def index
     mutual_friends = (current_user.following & current_user.followers)
-    @target_users = (mutual_friends | users_talked_once)
+    @target_users = (mutual_friends | current_user.users_talked_once)
     @target_users = @target_users.sort_by(&:id).paginate(page: params[:page])
   end
 
@@ -33,7 +33,7 @@ class DirectMessagesController < ApplicationController
     @user = User.find(params[:to_user_id])
 
     mutual_friends = (current_user.following & current_user.followers)
-    talked_users   = users_talked_once
+    talked_users   = current_user.users_talked_once
 
     redirect_to direct_massage_path unless (mutual_friends | talked_users).include? @user
   end
@@ -42,16 +42,6 @@ class DirectMessagesController < ApplicationController
     @user = User.find(params[:to_user_id])
 
     redirect_to direct_messages_path unless current_user.following_each_other?(@user)
-  end
-
-  def users_talked_once
-    talked_user_ids = DirectMessage.where(from_user_id: current_user.id)
-                                   .select(:to_user_id)
-                                   .uniq.map(&:to_user_id) |
-                      DirectMessage.where(to_user_id: current_user.id)
-                                   .select(:from_user_id)
-                                   .uniq.map(&:from_user_id)
-    talked_users = User.where(id: talked_user_ids)
   end
 
   def dm_params
