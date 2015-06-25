@@ -12,3 +12,8 @@ three:
   content: How are you?
   from_user: michael
   to_user: mallory
+
+four:
+  content: That's too bad.
+  from_user: michael
+  to_user: archer
