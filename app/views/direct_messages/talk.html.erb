@@ -1,8 +1,10 @@
 <h1>Talk with <%= @user.name %></h1>
 
-<%= form_for(@new_message, url: direct_messages_talk_path(@user)) do |f| %>
-  <%= f.text_area :content, class: "form-control" %>
-  <%= f.submit "Send", class: "btn btn-primary"%>
+<% unless current_user.following_each_other?(@user) %>
+  <%= form_for(@new_message, url: direct_messages_talk_path(@user)) do |f| %>
+    <%= f.text_area :content, class: "form-control" %>
+    <%= f.submit "Send", class: "btn btn-primary"%>
+  <% end %>
 <% end %>
 
 <ul>
