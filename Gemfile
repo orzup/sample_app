@@ -31,4 +31,4 @@ group :test do
   gem 'guard-minitest',     '2.3.1'
 end
 
-gem 'puma', '2.11.1', group: :production
+gem 'unicorn', '4.9.0', group: :production
