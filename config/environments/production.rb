@@ -70,8 +70,8 @@ Rails.application.configure do
     address:              "smtp.lolipop.jp",
     port:                 587,
     authentication:       :plain,
-    user_name:            ENV['LOLIPOP_MAIL_USERNAME'],
-    password:             ENV['LOLIPOP_MAIL_PASSWORD'],
+    user_name:            ENV['LOLIPOP_USERNAME'],
+    password:             ENV['LOLIPOP_PASSWORD'],
     domain:               "joe-noh.pw",
     enable_starttls_auto: true
   }
