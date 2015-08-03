@@ -20,4 +20,5 @@
 /spring/*.pid
 
 # Ignore uploaded test images
-/public/uploads
+/public/uploads/*
+!/public/uploads/.keep
